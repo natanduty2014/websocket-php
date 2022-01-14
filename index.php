@@ -70,7 +70,7 @@
 
 
     api = 1;
-    var uri = "ws://172.24.0.1:9504/?token=11111";
+    var uri = "ws://172.24.0.1:9503/?token=11111";
     var socket = new WebSocket(uri);
     socket.onclose = function (e) {
         console.log('connection closed');

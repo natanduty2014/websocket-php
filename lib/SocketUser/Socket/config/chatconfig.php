@@ -68,10 +68,12 @@ class Chat implements MessageComponentInterface
         $objselectmsg = json_decode($msg);
         //selecia o objeto do json específico 
         $iduser = $objselectmsg->useridto;
+
         go(function()
         {
             echo "Coroutine 1 is done.\n";
         });
+       
         //seleciona o destino da msg
         foreach ($this->clients as $client) {
             if ($client->resourceId !== $iduser) {
