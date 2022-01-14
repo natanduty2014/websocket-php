@@ -1,4 +1,3 @@
-<?php $ip = gethostbyname(gethostname()); ?>
 <html>
 
 <head>
