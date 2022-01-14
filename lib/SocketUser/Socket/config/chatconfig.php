@@ -19,9 +19,16 @@ class Chat implements MessageComponentInterface
         $this->sleep = $sleep;
     }
 
+    public function db()
+    {
+        go(function () {
+            echo "DB function.\n";
+        });
+    }
+
     public function onOpen(ConnectionInterface $conn, RequestInterface $request = null)
     {
-        
+
         /*
             "\PDO" precisa colocar a barra para nao dar conflito de class entre o codigo nativo php e o framwork
         */
@@ -40,11 +47,10 @@ class Chat implements MessageComponentInterface
         $key = $conn->httpRequest->getUri()->getQuery();
         //passando o paranmetro para fixar a autenticação
         $conn->resourceId = $key;
-        parse_str($key,$token);
+        parse_str($key, $token);
         //print_r($token);
         $conn->resourceId = $token['token'];
         echo "New connection! ({$conn->resourceId})\n";
-        
     }
 
     public function onMessage(ConnectionInterface $from, $msg)
@@ -68,12 +74,10 @@ class Chat implements MessageComponentInterface
         $objselectmsg = json_decode($msg);
         //selecia o objeto do json específico 
         $iduser = $objselectmsg->useridto;
-
-        go(function()
-        {
-            echo "Coroutine 1 is done.\n";
+        //chama uma função assicrona em swoole
+        go(function () {
+            echo "DB function.\n";
         });
-       
         //seleciona o destino da msg
         foreach ($this->clients as $client) {
             if ($client->resourceId !== $iduser) {
@@ -94,12 +98,12 @@ class Chat implements MessageComponentInterface
         // The connection is closed, remove it, as we can no longer send it messages
         $this->clients->detach($conn);
 
-       // echo "Connection {$conn->resourceId} has disconnected\n";
+        // echo "Connection {$conn->resourceId} has disconnected\n";
     }
 
     public function onError(ConnectionInterface $conn, \Exception $e)
     {
-       echo "An error has occurred: {$e->getMessage()}\n";
+        echo "An error has occurred: {$e->getMessage()}\n";
 
         $conn->close();
     }
