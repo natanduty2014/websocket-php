@@ -1,0 +1,15 @@
+{
+    "autoload": {
+        "psr-4": {
+            "User\\": "lib/SocketUser"
+        }
+    },
+    "require": {
+        "cboden/ratchet": "^0.4",
+        "react/event-loop": "^1.2",
+        "react/react": "^1.2",
+        "guzzlehttp/guzzle": "^7.0",
+        "react/promise": "^2.8",
+        "react/promise-timer": "^1.8"
+    }
+}
